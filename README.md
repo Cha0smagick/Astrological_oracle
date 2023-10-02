@@ -17,7 +17,7 @@ Para desbloquear el poder de Kerykeion MagiX, sigue estos oscuros pasos:
 
 1. Clona este repositorio en tu dispositivo mágico:
    ```sh
-   git clone https://github.com/cha0smagick/KerykeionMagiX.git
+   git clone https://github.com/Cha0smagick/Astrological_oracle
 
     Accede al directorio del proyecto:
 
