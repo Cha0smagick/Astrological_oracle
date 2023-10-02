@@ -21,9 +21,7 @@ Para desbloquear el poder de Kerykeion MagiX, sigue estos oscuros pasos:
 
     Accede al directorio del proyecto:
 
-    sh
-
-cd KerykeionMagiX
+   cd Astrological_oracle_main
 
 Instala las dependencias misteriosas (asegúrate de tener pip instalado):
 
