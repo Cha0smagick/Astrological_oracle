@@ -34,12 +34,15 @@ sh
 Uso
 
 Una vez instalado, ejecuta Kerykeion MagiX y sigue las indicaciones en la pantalla para ingresar la información astrológica. El programa generará tanto una imagen astrológica en formato SVG como un archivo de texto misterioso que contiene la información utilizada para la generación de la imagen.
+
 Contribución
 
 Si deseas contribuir a la magia de Kerykeion MagiX, ¡no dudes en enviar tus hechizos en forma de solicitudes de extracción! El tecnohechicero Cha0smagick siempre está buscando aliados en su búsqueda de la sabiduría astrológica.
+
 Licencia
 
 Este programa es propiedad del Tecnohechicero Cha0smagick y está protegido por un hechizo de licencia secreto. Puedes utilizarlo para descubrir los misterios del cosmos, pero no lo uses con fines oscuros.
+
 Contacto
 
 Para contactar al Tecnohechicero Cha0smagick, busca la señal en el cielo estrellado o susurra su nombre en una noche de luna llena. También puedes seguir sus aventuras en GitHub.
