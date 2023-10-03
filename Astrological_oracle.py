@@ -1,5 +1,6 @@
 from kerykeion import AstrologicalSubject, KerykeionChartSVG
 from pathlib import Path
+from kerykeion.report import Report  # Importa la clase Report desde kerykeion.report
 
 CURRENT_DIR = Path(__file__).parent
 
@@ -35,6 +36,13 @@ def main():
 
     name.makeSVG()
     print(len(name.aspects_list))
+
+    # Crear una instancia de Report utilizando los datos del usuario
+    user_report = Report(person1)
+
+    # Imprimir el informe
+    user_report.print_report()
+
 if __name__ == "__main__":
     from kerykeion.utilities import setup_logging
     setup_logging(level="debug")
