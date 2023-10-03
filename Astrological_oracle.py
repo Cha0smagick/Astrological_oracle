@@ -1,6 +1,7 @@
 from kerykeion import AstrologicalSubject, KerykeionChartSVG
 from pathlib import Path
 from kerykeion.report import Report  # Importa la clase Report desde kerykeion.report
+import sys  # Importa el módulo sys para redirigir la salida estándar
 
 CURRENT_DIR = Path(__file__).parent
 
@@ -40,8 +41,13 @@ def main():
     # Crear una instancia de Report utilizando los datos del usuario
     user_report = Report(person1)
 
-    # Imprimir el informe
-    user_report.print_report()
+    # Redirigir la salida estándar a un archivo
+    with open('informe.txt', 'w') as file:
+        sys.stdout = file  # Redirige la salida estándar al archivo
+        user_report.print_report()  # Llama al método print_report para que escriba en el archivo
+
+    # Restaura la salida estándar
+    sys.stdout = sys.__stdout__
 
 if __name__ == "__main__":
     from kerykeion.utilities import setup_logging
