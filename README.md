@@ -2,6 +2,9 @@
 
 ## Introducción
 Bienvenidos al asombroso mundo de Kerykeion MagiX, una creación del tecnohechicero Cha0smagick. Este poderoso artefacto de la magia digital está imbuido con el poder de la dependencia secreta conocida como Kerykeion, que nos permite explorar los misterios de la astrología en el reino cibernético.
+Ahora puedes probarlo gratis en :[Astrological Chart en Hugging Face](https://huggingface.co/spaces/cha0smagick/Astrological_chart)
+
+
 
 ## Descripción
 Kerykeion MagiX es una herramienta mágica que te permite generar gráficos astrológicos y desvelar los secretos del universo a través de la astrología. Utilizando el misterioso poder de Kerykeion, podrás obtener información detallada sobre los eventos celestiales que influencian tus vidas y las de aquellos que te rodean.
