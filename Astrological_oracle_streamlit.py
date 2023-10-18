@@ -3,7 +3,7 @@ from kerykeion import AstrologicalSubject, KerykeionChartSVG
 from kerykeion.report import Report
 from pathlib import Path
 import sys
-from PIL import Image
+import os
 
 def get_user_input():
     name = st.text_input("Nombre de la persona:")
@@ -59,9 +59,15 @@ def main():
         st.markdown("## Contenido del Informe")
         st.text(report_content)
 
-    # Display the generated SVG image
+    # Search and display an SVG image in the current directory
     st.markdown("## Gráfico Astral Generado")
-    st.image('chart.svg')
+    svg_files = [f for f in os.listdir(os.getcwd()) if f.endswith(".svg")]
+
+    if svg_files:
+        svg_file = svg_files[0]  # Display the first SVG file found
+        st.image(svg_file, use_container_width=True)
+    else:
+        st.write("No se encontraron archivos SVG en el directorio actual.")
 
 if __name__ == "__main__":
     main()
