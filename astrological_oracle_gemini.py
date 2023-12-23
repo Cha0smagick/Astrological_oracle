@@ -51,7 +51,7 @@ class SynastryAspectsWithRelevant(SynastryAspects):
         return relevant_aspects_list
 
 def main():
-    st.title("Astrological Chart and WiseOracle Integration")
+    st.title("Astrological Chart Oracle")
 
     # Astrological chart generation
     st.write("Enter information for the first person:")
@@ -71,8 +71,8 @@ def main():
             aspect_list = synastry.relevant_aspects
             report_content = "\n".join([str(aspect) for aspect in aspect_list])
         else:  # Transit
-            # Code for Transit chart and report (if required)
-            pass
+            # Display a message for the "Transit" option
+            st.write("Feature in development")
     else:
         # Generate and capture the astrological report for person1
         old_stdout = sys.stdout
@@ -86,10 +86,10 @@ def main():
     genai.configure(api_key='google_api_key')  # Replace with your Gemini API key
     model = genai.GenerativeModel('gemini-pro')
 
-    #st.write("Context Information:")
-    #st.write(report_content)
+    # st.write("Context Information:")
+    # st.write(report_content)
 
-    st.write("Ask the WiseOracle using your astrological chart information as context")
+    st.write("Ask the Astrological Oracle using your astrological chart information as context")
     user_query = st.text_input("Your question:")
     if st.button("Get Astrological Insight"):
         cleaned_input = clean_text(report_content + " " + user_query)
