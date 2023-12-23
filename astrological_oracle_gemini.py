@@ -71,7 +71,7 @@ def main():
             aspect_list = synastry.relevant_aspects
             report_content = "\n".join([str(aspect) for aspect in aspect_list])
         else:  # Transit
-            st.write("Code in develop. sorry for the incoveniences")
+            # Code for Transit chart and report (if required)
             pass
     else:
         # Generate and capture the astrological report for person1
@@ -83,8 +83,11 @@ def main():
         report_content = mystdout.getvalue()
 
     # Google GEMINI integration
-    genai.configure(api_key='your_google_api_key')  # Replace with your Gemini API key
+    genai.configure(api_key='AIzaSyAkbU3CsZ-xmOhRF1XfdlVxasRtt9gdRMk')  # Replace with your Gemini API key
     model = genai.GenerativeModel('gemini-pro')
+
+    #st.write("Context Information:")
+    #st.write(report_content)
 
     st.write("Ask the WiseOracle using your astrological chart information as context")
     user_query = st.text_input("Your question:")
