@@ -1,5 +1,5 @@
 import streamlit as st
-from kerykeion import AstrologicalSubject, KerykeionChartSVG
+from kerykeion import AstrologicalSubject, KerykeionChartSVG, SynastryAspects
 from kerykeion.report import Report
 import sys
 import os
@@ -25,16 +25,16 @@ def generate_response(cleaned_input, model):
         st.error(f"Error: {error_message}")
         return None
 
-# Function to get user input for astrological charts
-def get_user_input():
-    name = st.text_input("Person's name:")
-    year = st.number_input("Year of birth:", min_value=1900, max_value=2099)
-    month = st.number_input("Month of birth (1-12):", min_value=1, max_value=12)
-    day = st.number_input("Day of birth (1-31):", min_value=1, max_value=31)
-    hour = st.number_input("Hour of birth (0-23):", min_value=0, max_value=23)
-    minute = st.number_input("Minute of birth (0-59):", min_value=0, max_value=59)
-    location = st.text_input("Place of birth:")
-    zodiac_type = st.selectbox("Zodiac type", ["Tropic", "Sidereal"]).capitalize()
+# Function to get user input for astrological charts, with unique keys
+def get_user_input(key_suffix=""):
+    name = st.text_input(f"Person's name {key_suffix}:", key=f"name{key_suffix}")
+    year = st.number_input(f"Year of birth {key_suffix}:", min_value=1900, max_value=2099, key=f"year{key_suffix}")
+    month = st.number_input(f"Month of birth {key_suffix} (1-12):", min_value=1, max_value=12, key=f"month{key_suffix}")
+    day = st.number_input(f"Day of birth {key_suffix} (1-31):", min_value=1, max_value=31, key=f"day{key_suffix}")
+    hour = st.number_input(f"Hour of birth {key_suffix} (0-23):", min_value=0, max_value=23, key=f"hour{key_suffix}")
+    minute = st.number_input(f"Minute of birth {key_suffix} (0-59):", min_value=0, max_value=59, key=f"minute{key_suffix}")
+    location = st.text_input(f"Place of birth {key_suffix}:", key=f"location{key_suffix}")
+    zodiac_type = st.selectbox(f"Zodiac type {key_suffix}", ["Tropic", "Sidereal"], key=f"zodiac_type{key_suffix}").capitalize()
     return name, year, month, day, hour, minute, location, zodiac_type
 
 def main():
@@ -43,30 +43,34 @@ def main():
     # Astrological chart generation
     st.write("Enter information for the first person:")
     name1, year1, month1, day1, hour1, minute1, location1, zodiac_type1 = get_user_input()
+    person1 = AstrologicalSubject(name1, year1, month1, day1, hour1, minute1, location1, zodiac_type=zodiac_type1)
     
     chart_type = st.selectbox("Chart type", ["Natal", "Synastry", "Transit"]).capitalize()
+
+    report_content = ""
     if chart_type in ["Synastry", "Transit"]:
         st.write("Enter information for the second person:")
-        name2, year2, month2, day2, hour2, minute2, location2, zodiac_type2 = get_user_input()
-        person1 = AstrologicalSubject(name1, year1, month1, day1, hour1, minute1, location1, zodiac_type=zodiac_type1)
+        name2, year2, month2, day2, hour2, minute2, location2, zodiac_type2 = get_user_input(" - Person 2")
         person2 = AstrologicalSubject(name2, year2, month2, day2, hour2, minute2, location2, zodiac_type=zodiac_type2)
-        chart = KerykeionChartSVG(person1, chart_type=chart_type, second_obj=person2)
+
+        if chart_type == "Synastry":
+            synastry = SynastryAspects(person1, person2)
+            aspect_list = synastry.get_relevant_aspects()
+            report_content = "\n".join([str(aspect) for aspect in aspect_list])
+        else:  # Transit
+            st.write("In develop. Sorry for the inconvenience")
+            pass
     else:
-        person1 = AstrologicalSubject(name1, year1, month1, day1, hour1, minute1, location1, zodiac_type=zodiac_type1)
-        chart = KerykeionChartSVG(person1, chart_type=chart_type)
-
-    chart.makeSVG()
-
-    # Generate and capture the astrological report
-    old_stdout = sys.stdout
-    sys.stdout = mystdout = StringIO()
-    user_report = Report(person1)
-    user_report.print_report()
-    sys.stdout = old_stdout
-    report_content = mystdout.getvalue()
+        # Generate and capture the astrological report for person1
+        old_stdout = sys.stdout
+        sys.stdout = mystdout = StringIO()
+        user_report = Report(person1)
+        user_report.print_report()
+        sys.stdout = old_stdout
+        report_content = mystdout.getvalue()
 
     # Google GEMINI integration
-    genai.configure(api_key='your_google_api_key')  # Replace with your Gemini API key
+    genai.configure(api_key='AIzaSyAkbU3CsZ-xmOhRF1XfdlVxasRtt9gdRMk')  # Replace with your Gemini API key
     model = genai.GenerativeModel('gemini-pro')
 
     st.write("Ask the WiseOracle using your astrological chart information as context")
