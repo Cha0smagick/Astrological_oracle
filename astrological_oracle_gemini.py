@@ -59,10 +59,10 @@ def main():
     name1, year1, month1, day1, hour1, minute1, location1, zodiac_type1 = get_user_input()
     person1 = AstrologicalSubject(name1, year1, month1, day1, hour1, minute1, location1, zodiac_type=zodiac_type1)
     
-    chart_type = st.selectbox("Chart type", ["Natal (Singles)", "Synastry (Couple)"]).capitalize()
+    chart_type = st.selectbox("Chart type", ["Natal", "Synastry"]).capitalize()
 
     report_content = ""
-    if chart_type == "Synastry (Couple)":
+    if chart_type == "Synastry":
         st.write("Enter information for the second person:")
         name2, year2, month2, day2, hour2, minute2, location2, zodiac_type2 = get_user_input(" - Person 2")
         person2 = AstrologicalSubject(name2, year2, month2, day2, hour2, minute2, location2, zodiac_type=zodiac_type2)
@@ -72,7 +72,7 @@ def main():
         report_content = "\n".join([str(aspect) for aspect in aspect_list])
 
     # Google GEMINI integration
-    genai.configure(api_key='google_api_key')  # Replace with your Gemini API key
+    genai.configure(api_key='your_google_api_key')  # Replace with your Gemini API key
     model = genai.GenerativeModel('gemini-pro')
 
     st.write("Ask the WiseOracle using your astrological chart information as context")
