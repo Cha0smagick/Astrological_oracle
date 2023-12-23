@@ -51,29 +51,43 @@ class SynastryAspectsWithRelevant(SynastryAspects):
         return relevant_aspects_list
 
 def main():
-    st.title("Astrological Chart Oracle")
-    st.write("Enter information for you, your lover or both, and get astrological and compatibility results!:")
+    st.title("Astrological Chart and WiseOracle Integration")
 
     # Astrological chart generation
     st.write("Enter information for the first person:")
     name1, year1, month1, day1, hour1, minute1, location1, zodiac_type1 = get_user_input()
     person1 = AstrologicalSubject(name1, year1, month1, day1, hour1, minute1, location1, zodiac_type=zodiac_type1)
     
-    chart_type = st.selectbox("Chart type", ["Natal", "Synastry"]).capitalize()
+    chart_type = st.selectbox("Chart type", ["Natal", "Synastry", "Transit"]).capitalize()
 
     report_content = ""
-    if chart_type == "Synastry":
+    if chart_type in ["Synastry", "Transit"]:
         st.write("Enter information for the second person:")
         name2, year2, month2, day2, hour2, minute2, location2, zodiac_type2 = get_user_input(" - Person 2")
         person2 = AstrologicalSubject(name2, year2, month2, day2, hour2, minute2, location2, zodiac_type=zodiac_type2)
 
-        synastry = SynastryAspectsWithRelevant(person1, person2)
-        aspect_list = synastry.relevant_aspects
-        report_content = "\n".join([str(aspect) for aspect in aspect_list])
+        if chart_type == "Synastry":
+            synastry = SynastryAspectsWithRelevant(person1, person2)
+            aspect_list = synastry.relevant_aspects
+            report_content = "\n".join([str(aspect) for aspect in aspect_list])
+        else:  # Transit
+            # Code for Transit chart and report (if required)
+            pass
+    else:
+        # Generate and capture the astrological report for person1
+        old_stdout = sys.stdout
+        sys.stdout = mystdout = StringIO()
+        user_report = Report(person1)
+        user_report.print_report()
+        sys.stdout = old_stdout
+        report_content = mystdout.getvalue()
 
     # Google GEMINI integration
-    genai.configure(api_key='your_google_api_key')  # Replace with your Gemini API key
+    genai.configure(api_key='AIzaSyAkbU3CsZ-xmOhRF1XfdlVxasRtt9gdRMk')  # Replace with your Gemini API key
     model = genai.GenerativeModel('gemini-pro')
+
+    #st.write("Context Information:")
+    #st.write(report_content)
 
     st.write("Ask the WiseOracle using your astrological chart information as context")
     user_query = st.text_input("Your question:")
