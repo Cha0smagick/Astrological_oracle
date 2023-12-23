@@ -37,6 +37,19 @@ def get_user_input(key_suffix=""):
     zodiac_type = st.selectbox(f"Zodiac type {key_suffix}", ["Tropic", "Sidereal"], key=f"zodiac_type{key_suffix}").capitalize()
     return name, year, month, day, hour, minute, location, zodiac_type
 
+class SynastryAspectsWithRelevant(SynastryAspects):
+    @property
+    def relevant_aspects(self):
+        relevant_aspects_list = []
+        
+        # Add your logic to calculate relevant aspects here
+        for aspect in self.all_aspects:
+            # Customize this condition based on your criteria
+            if aspect["orbit"] < 10:
+                relevant_aspects_list.append(aspect)
+        
+        return relevant_aspects_list
+
 def main():
     st.title("Astrological Chart and WiseOracle Integration")
 
@@ -54,11 +67,11 @@ def main():
         person2 = AstrologicalSubject(name2, year2, month2, day2, hour2, minute2, location2, zodiac_type=zodiac_type2)
 
         if chart_type == "Synastry":
-            synastry = SynastryAspects(person1, person2)
-            aspect_list = synastry.get_relevant_aspects()
+            synastry = SynastryAspectsWithRelevant(person1, person2)
+            aspect_list = synastry.relevant_aspects
             report_content = "\n".join([str(aspect) for aspect in aspect_list])
         else:  # Transit
-            st.write("In develop. Sorry for the inconvenience")
+            st.write("Code in develop. sorry for the incoveniences")
             pass
     else:
         # Generate and capture the astrological report for person1
@@ -70,7 +83,7 @@ def main():
         report_content = mystdout.getvalue()
 
     # Google GEMINI integration
-    genai.configure(api_key='your_google_api_key')  # Replace with your Gemini API key
+    genai.configure(api_key='AIzaSyAkbU3CsZ-xmOhRF1XfdlVxasRtt9gdRMk')  # Replace with your Gemini API key
     model = genai.GenerativeModel('gemini-pro')
 
     st.write("Ask the WiseOracle using your astrological chart information as context")
