@@ -83,7 +83,7 @@ def main():
         report_content = mystdout.getvalue()
 
     # Google GEMINI integration
-    genai.configure(api_key='AIzaSyAkbU3CsZ-xmOhRF1XfdlVxasRtt9gdRMk')  # Replace with your Gemini API key
+    genai.configure(api_key='google_api_key')  # Replace with your Gemini API key
     model = genai.GenerativeModel('gemini-pro')
 
     #st.write("Context Information:")
